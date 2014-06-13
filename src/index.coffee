@@ -34,7 +34,9 @@ class ConnectApp
       server = http.createServer app
     app.use connect.directory(if typeof opt.root == "object" then opt.root[0] else opt.root)
     server.listen opt.port
-    @log "Server started http://#{opt.host}:#{opt.port}"
+
+    protocol = if opt.https then 'https' else 'http'
+    @log "Server started #{protocol}://#{opt.host}:#{opt.port}"
     if opt.livereload
       tiny_lr.Server::error = ->
       if opt.https?
